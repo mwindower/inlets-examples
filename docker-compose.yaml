@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  server:
+    image: inlets/inlets:2.6.3
+    command: server --port 8090 --control-port 4443 --token "abc"
+    ports:
+    - 8090:8090
+  client:
+    image: inlets/inlets:2.6.3
+    command: client --remote=server:4443 --upstream=http://web:80 --token "abc"
+  web:
+    image: nginx

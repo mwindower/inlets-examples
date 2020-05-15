@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inlets-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inlets-server
+  template:
+    metadata:
+      labels:
+        app: inlets-server
+    spec:
+      containers:
+      - name: inlets-server
+        imagePullPolicy: IfNotPresent
+        # L7
+        image: inlets/inlets:2.6.3
+        command: ["inlets"]
+        args:
+        - "server"
+        - "--token=abc"
+        - "--port=8082"
+        - "--control-port=8001"
+        ports:
+        - containerPort: 8001
+        - containerPort: 8082
+        # L4
+        #image: inlets/inlets-pro:0.6.0
+        #command: ["inlets-pro"]
+        #args:
+        #- "server"
+        #- "--auto-tls=true"
+        #- "--remote-tcp=127.0.0.1"
+        #- "--common-name=PUBLIC_IP_GOES_HERE"
+        #- "--token=AUTHTOKENHERE"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inlets-control
+  labels:
+    app: inlets-server
+spec:
+  type: NodePort
+  ports:
+    - name: inlets-control
+      protocol: TCP
+      port: 8001
+      targetPort: 8001
+      nodePort: 30081
+    - name: inlets-data
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
+      nodePort: 30082 
+  selector:
+    app: inlets-server

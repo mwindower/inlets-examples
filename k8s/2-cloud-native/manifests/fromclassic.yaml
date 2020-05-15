@@ -1,0 +1,71 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc
+  labels:
+    app: svc
+spec:
+  type: ClusterIP
+  ports:
+    - name: svc
+      port: 8082
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: nginx
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inlets-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inlets-client
+  template:
+    metadata:
+      labels:
+        app: inlets-client
+    spec:
+      containers:
+      - name: inlets-client
+        imagePullPolicy: IfNotPresent
+        # L7
+        image: inlets/inlets:2.6.3
+        command: ["inlets"]
+        args:
+        - "client"
+        - "--remote=172.17.0.1:30081"
+        - "--upstream=svc:8082"
+        - "--token=abc"
+        # L4
+        # image: inlets/inlets-pro:0.6.0
+        # command: ["inlets-pro"]
+        # args:
+        # - "client"
+        # - "--connect=wss://EXIT_NODE_IP:8123/connect"
+        # - "--tcp-ports=80,443"
+        # - "--token=AUTHTOKENHERE"
+        # - "--license=LICENSE_JWT_HERE"
