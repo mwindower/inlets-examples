@@ -1,6 +1,6 @@
 # Inlets examples
 
-This repo contains examples to use [github.com/inlets/inlets(-pro)](github.com/inlets/inlets).
+This repo contains examples to use [github.com/inlets/inlets(-pro)](https://github.com/inlets/inlets).
 
 ## Example 1: with docker-compose
 
