@@ -25,3 +25,17 @@ This repo contains examples to use [github.com/inlets/inlets(-pro)](https://gith
         ```
         cd 0-classic && docker-compose up connecttocloudnative
         ```
+
+### L7 Throughput
+
+|Source\Destination     |Cloud-Native   |Legacy         |
+|-|-|-|
+|Cloud-Native           |16.0MB/s       |1.78MB/s       |
+|Legacy                 |2.3MB/s        |14.66MB/s      |
+
+### L7 Latency (95th percentile)
+
+|Source\Destination     |Cloud-Native   |Legacy |
+|-|-|-|
+|Cloud-Native           |7ms            |347ms  |
+|Legacy                 |176ms          |12ms   |
