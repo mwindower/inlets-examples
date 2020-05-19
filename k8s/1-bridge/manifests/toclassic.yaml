@@ -17,19 +17,19 @@ spec:
       - name: inlets-client
         imagePullPolicy: IfNotPresent
         # L7
-        image: inlets/inlets:2.6.3
-        command: ["inlets"]
-        args:
-        - "client"
-        - "--remote=172.17.0.1:30080"
-        - "--upstream=http://172.17.0.1:8081"
-        - "--token=abc"
-        # L4
-        # image: inlets/inlets-pro:0.6.0
-        # command: ["inlets-pro"]
+        # image: inlets/inlets:2.6.3
+        # command: ["inlets"]
         # args:
         # - "client"
-        # - "--connect=wss://EXIT_NODE_IP:8123/connect"
-        # - "--tcp-ports=80,443"
-        # - "--token=AUTHTOKENHERE"
-        # - "--license=LICENSE_JWT_HERE"
+        # - "--remote=172.17.0.1:30080"
+        # - "--upstream=http://172.17.0.1:8081"
+        # - "--token=abc"
+        # L4
+        image: inlets/inlets-pro:0.6.0
+        command: ["inlets-pro"]
+        args:
+        - "client"
+        - "--connect=ws://172.17.0.1:30080/connect"
+        - "--tcp-ports=5432"
+        - "--token=abc"
+        - "--license=<LICENSE>"

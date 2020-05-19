@@ -13,29 +13,36 @@ spec:
       labels:
         app: inlets-server
     spec:
+      volumes:
+      - name: tmp-cert
+        emptyDir: {}
       containers:
       - name: inlets-server
         imagePullPolicy: IfNotPresent
         # L7
-        image: inlets/inlets:2.6.3
-        command: ["inlets"]
+        # image: inlets/inlets:2.6.3
+        # command: ["inlets"]
+        # args:
+        # - "server"
+        # - "--token=abc"
+        # - "--port=8081"
+        # - "--control-port=8000"
+        #ports:
+        #- containerPort: 8000
+        #- containerPort: 5432
+        # L4
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-cert
+        image: inlets/inlets-pro:0.6.0
+        command: ["inlets-pro"]
         args:
         - "server"
+        - "--auto-tls=false"
+        - "--listen=:8000"
+        - "--remote-tcp=172.17.0.1"
+        - "--common-name=server"
         - "--token=abc"
-        - "--port=8081"
-        - "--control-port=8000"
-        ports:
-        - containerPort: 8080
-        - containerPort: 8081
-        # L4
-        #image: inlets/inlets-pro:0.6.0
-        #command: ["inlets-pro"]
-        #args:
-        #- "server"
-        #- "--auto-tls=true"
-        #- "--remote-tcp=127.0.0.1"
-        #- "--common-name=PUBLIC_IP_GOES_HERE"
-        #- "--token=AUTHTOKENHERE"
 
 ---
 apiVersion: v1
@@ -62,11 +69,12 @@ metadata:
   labels:
     app: inlets-server
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: inlets-data
-      port: 80
+      port: 5432
       protocol: TCP
-      targetPort: 8081
+      targetPort: 5432
+      nodePort: 30084
   selector:
     app: inlets-server
