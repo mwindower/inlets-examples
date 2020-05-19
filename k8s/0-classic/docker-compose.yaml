@@ -12,7 +12,7 @@ services:
     ports:
       - 8081:80
     volumes:
-      - ./www:/usr/share/html
+      - ./html:/usr/share/nginx/html
   connecttocloudnative:
     image: curlimages/curl
     command: -v http://172.17.0.1:8082
