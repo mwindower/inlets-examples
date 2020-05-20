@@ -26,23 +26,33 @@ This repo contains examples to use [github.com/inlets/inlets(-pro)](https://gith
         cd 0-classic && docker-compose up connecttocloudnative
         ```
 
-### L7 Throughput (1 request for a big file)
+
+## L7 Performance (inlets OSS)
+
+__single request for a big file (500MB)__
 
 |Source\Destination     |Cloud-Native   |Legacy         |
 |-|-|-|
 |Cloud-Native           |609MB/s        |200MB/s        |
 |Legacy                 |147MB/s        |708MB/s        |
 
-### L7 Throughput (200 parallel requests for a small file)
+__200 parallel requests for a small file (1KB)__
 
 |Source\Destination     |Cloud-Native   |Legacy         |
 |-|-|-|
 |Cloud-Native           |16.0MB/s       |1.78MB/s       |
 |Legacy                 |2.3MB/s        |14.66MB/s      |
 
-### L7 Latency (95th percentile)
+__95th percentile for latency__
 
 |Source\Destination     |Cloud-Native   |Legacy |
 |-|-|-|
 |Cloud-Native           |7ms            |347ms  |
 |Legacy                 |176ms          |12ms   |
+
+## L4 Performance (inlets-pro)
+
+|                       | pgbench tps   | pgbench latency       | iperf throughput      |
+|-|-|-|-|
+|Legacy                 | 47000         | 2ms                   | 35Gbit/s              |
+|Cloud-Native -> Legacy | 12000         | 7s                    | 4.8GBit/s             |
