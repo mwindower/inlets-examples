@@ -72,9 +72,9 @@ spec:
   type: NodePort
   ports:
     - name: inlets-data
-      port: 8088
+      port: 5432
       protocol: TCP
-      targetPort: 8088
+      targetPort: 5432
       nodePort: 30084
   selector:
     app: inlets-server
