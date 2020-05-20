@@ -55,4 +55,4 @@ __95th percentile for latency__
 |                       | pgbench tps   | pgbench latency       | iperf throughput      |
 |-|-|-|-|
 |Legacy                 | 47000         | 2ms                   | 35Gbit/s              |
-|Cloud-Native -> Legacy | 12000         | 7s                    | 4.8GBit/s             |
+|Cloud-Native -> Legacy | 12000         | 7ms                   | 4.8GBit/s             |
