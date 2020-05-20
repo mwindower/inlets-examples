@@ -17,13 +17,9 @@ This repo contains examples to use [github.com/inlets/inlets(-pro)](https://gith
 
         ```
         kubectx kind-cloud-native
-        k exec -it -n default netshoot-deploy-<TAB> -- curl classic-service
-        ```
-
-* from the classic/legacy part the service `svc` of the `cloud-native` cluster is accessible: 
-
-        ```
-        cd 0-classic && docker-compose up connecttocloudnative
+        k exec -it -n default netshoot-deploy-<TAB> -- telnet classic-service 5432
+        # port is exposed as host port and accessible from your machine with
+        psql -h localhost -U postgres -p 30084
         ```
 
 ### L7 Throughput (1 request for a big file)
