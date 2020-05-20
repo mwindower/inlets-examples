@@ -30,6 +30,6 @@ spec:
         args:
         - "client"
         - "--connect=ws://172.17.0.1:30080/connect"
-        - "--tcp-ports=8088"
+        - "--tcp-ports=5432"
         - "--token=abc"
         - "--license=<LICENSE>"
